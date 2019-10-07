@@ -1,0 +1,17 @@
+{
+  "name": "poker-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/bundle.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "4.41.0"
+  }
+}
