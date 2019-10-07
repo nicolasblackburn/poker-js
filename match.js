@@ -1,3 +1,26 @@
+/**
+ * @file 
+ * This is a small module to allow pattern matching 
+ * simple nested array structures using a unification 
+ * algorithm. Patterns are defined using various 
+ * pattern expressions like variable captures,
+ * function calls, wildcards, etc.
+ */
+
+/**
+ * A variable pattern. Match any expression and 
+ * capture the matched expression into a javascript
+ * object.
+ *
+ * ```
+ * const {match, Variable} = require("./match");
+ *
+ * match([1, 2, [3, Variable("x")]], 
+ *       [1, 2, [3, "hello"]]);
+ *
+ * // returns {x: "hello"}
+ * ```
+ */ 
 function Variable(label) {
   if (!(this instanceof Variable)) {
     return new Variable(label);
@@ -6,10 +29,27 @@ function Variable(label) {
   }
 }
 
+/**
+ * Match an array. The order of elements does not
+ * affect the match.
+ *
+ * ```
+ * const {match, Unordered} = require("./match");
+ *
+ * match(Unordered(3, 2, "a", 1), 
+ *       [1, 2, 3, "a"]);
+ *
+ * // returns {}
+ * ```
+ */
 function Unordered(...values) {
   if (!(this instanceof Unordered)) {
     return new Unordered(...values);
   } else {
+    // This is not optimal as some permutations
+    // applied to the values gives the same
+    // result and duplicate the number of checks 
+    // that needs to be done.
     this.permutations = permutations(values);
   }
 }
@@ -175,7 +215,6 @@ module.exports = {
   wildcard, 
   Unordered, 
   FunctionCall,
-  permutations,
   Any,
   Capture
 };
